@@ -560,10 +560,10 @@ function ofTest(end) {
 
 function fmapTest(end) {
   console.log('fmap test:');
-  const M = metasync.monad;
+  const of = metasync.monad.of;
   const args = [4, 'str', [1, 2, 3]];
   const reverseArgs = (...args) => args.reverse();
-  M.of(...args).fmap(reverseArgs)(printCallbackArgs(end));
+  of(...args).fmap(reverseArgs)(printCallbackArgs(end));
 }
 
 function monadChainTest(end) {

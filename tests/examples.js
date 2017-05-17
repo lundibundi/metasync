@@ -567,13 +567,13 @@ function fmapTest(end) {
 }
 
 function monadChainTest(end) {
-  console.log('Monad chain test:');
+  console.log('Monad concat test:');
   const M = metasync.monad;
   const args = [4, 'str', [1, 2, 3]];
   const asyncPrint = M.withCb((args, callback) =>
     printCallbackArgs(callback)(null, ...args)
   );
-  M.chain(M.of(...args), asyncPrint)(end);
+  M.concat(M.of(...args), asyncPrint)(end);
 }
 
 function apTest(end) {

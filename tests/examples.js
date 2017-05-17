@@ -563,7 +563,7 @@ function fmapTest(end) {
   const M = metasync.monad;
   const args = [4, 'str', [1, 2, 3]];
   const reverseArgs = (...args) => args.reverse();
-  M.fmap(reverseArgs, M.of(...args))(printCallbackArgs(end));
+  M.of(...args).fmap(reverseArgs)(printCallbackArgs(end));
 }
 
 function monadChainTest(end) {
@@ -573,7 +573,7 @@ function monadChainTest(end) {
   const asyncPrint = M.withCb((args, callback) =>
     printCallbackArgs(callback)(null, ...args)
   );
-  M.concat(M.of(...args), asyncPrint)(end);
+  M.of(...args).concat(asyncPrint)(end);
 }
 
 function apTest(end) {
@@ -590,8 +590,9 @@ function apTest(end) {
   const arrOfAsyncFunctions = [
     ['first', 1], ['second', 2], ['third', 3]
   ].map(args => M.of(...args));
+  const apR = (prev, next) => M.ap(next, prev);
 
-  arrOfAsyncFunctions.reduce(M.ap, M.of(collect))(() => {
+  arrOfAsyncFunctions.reduce(apR, M.of(collect))(() => {
     console.log(storage);
     console.log('done');
     end();

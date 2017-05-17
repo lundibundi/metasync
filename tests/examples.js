@@ -570,7 +570,7 @@ function monadChainTest(end) {
   console.log('Monad concat test:');
   const M = metasync.monad;
   const args = [4, 'str', [1, 2, 3]];
-  const asyncPrint = M.withCb((args, callback) =>
+  const asyncPrint = M.toAsync((args, callback) =>
     printCallbackArgs(callback)(null, ...args)
   );
   M.of(...args).concat(asyncPrint)(end);
